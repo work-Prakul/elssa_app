@@ -1,53 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:elssa_app/core/theme/app_theme.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-// --- THEME DEFINITIONS ---
-// For simplicity, these are included in main.dart.
-// In a larger app, this would be in its own file (e.g., core/theme/app_theme.dart).
-class AppTheme {
-  // Colors
-  static const Color primaryTextColor = Color(0xFF0B0D11);
-  static const Color secondaryTextColor = Color(0xFF313131);
-  static const Color tertiaryTextColor = Color(0xFF545454);
-  static const Color greyTextColor = Color(0xFF9C9C9C);
-  static const Color blackColor = Color(0xFF000000);
-  static const Color whiteColor = Color(0xFFFFFFFF);
-  static const Color lightGreyBg = Color(0xFFF4F4F4);
-  static const Color borderColor = Color(0xFFE1E1E1);
-  static const Color blueAccent = Color(0xFF3B6ECC);
-  static const Color greenAccent = Color(0xFFEDFFEE);
 
-  // Text Styles
-  static TextTheme getTextTheme() {
-    return TextTheme(
-      headlineSmall: GoogleFonts.raleway(
-          fontSize: 24,
-          fontWeight: FontWeight.w600,
-          color: const Color(0xFF424242)),
-      titleLarge: GoogleFonts.raleway(
-          fontSize: 16,
-          fontWeight: FontWeight.w700,
-          color: primaryTextColor),
-      bodyMedium: GoogleFonts.raleway(
-          fontSize: 16,
-          fontWeight: FontWeight.w400,
-          color: primaryTextColor,
-          height: 1.5),
-      bodySmall: GoogleFonts.raleway(
-          fontSize: 12,
-          fontWeight: FontWeight.w400,
-          color: primaryTextColor,
-          height: 1.5),
-      labelMedium: GoogleFonts.inter(
-          fontSize: 14,
-          fontWeight: FontWeight.w500,
-          color: secondaryTextColor),
-    );
-  }
-}
 
-// --- APP INITIALIZATION ---
 void main() {
   runApp(const MyApp());
 }
@@ -56,26 +13,14 @@ void main() {
 final GoRouter _router = GoRouter(
   initialLocation: '/splash',
   routes: [
-    GoRoute(
-      path: '/splash',
-      builder: (context, state) => const SplashScreen(),
-    ),
-    GoRoute(
-      path: '/login',
-      builder: (context, state) => const LoginScreen(),
-    ),
+    GoRoute(path: '/splash', builder: (context, state) => const SplashScreen()),
+    GoRoute(path: '/login', builder: (context, state) => const LoginScreen()),
     GoRoute(
       path: '/old-login',
       builder: (context, state) => const OldUserLoginScreen(),
     ),
-    GoRoute(
-      path: '/otp',
-      builder: (context, state) => const OTPScreen(),
-    ),
-    GoRoute(
-      path: '/home',
-      builder: (context, state) => const HomeScreen(),
-    ),
+    GoRoute(path: '/otp', builder: (context, state) => const OTPScreen()),
+    GoRoute(path: '/home', builder: (context, state) => const HomeScreen()),
   ],
 );
 
@@ -89,15 +34,16 @@ class MyApp extends StatelessWidget {
       title: 'ELSSA Services',
       theme: ThemeData(
         scaffoldBackgroundColor: AppTheme.whiteColor,
-        textTheme: AppTheme.getTextTheme(),
+        textTheme: AppTheme.textTheme,
         appBarTheme: const AppBarTheme(
           backgroundColor: AppTheme.whiteColor,
           elevation: 0,
           iconTheme: IconThemeData(color: AppTheme.blackColor),
           titleTextStyle: TextStyle(
-              color: AppTheme.blackColor,
-              fontSize: 18,
-              fontWeight: FontWeight.bold),
+            color: AppTheme.blackColor,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
       routerConfig: _router,
@@ -124,14 +70,17 @@ class SplashScreen extends StatelessWidget {
             // Replace with your actual logo asset
             const Icon(Icons.flash_on, size: 100, color: AppTheme.blueAccent),
             const SizedBox(height: 20),
-            Text('ELSSA',
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineSmall
-                    ?.copyWith(fontWeight: FontWeight.bold)),
+            Text(
+              'ELSSA',
+              style: Theme.of(
+                context,
+              ).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold),
+            ),
             const SizedBox(height: 10),
-            const Text('Powered by Oyelabs with ❤️',
-                style: TextStyle(color: AppTheme.greyTextColor)),
+            const Text(
+              'Powered by Oyelabs with ❤️',
+              style: TextStyle(color: AppTheme.greyTextColor),
+            ),
           ],
         ),
       ),
@@ -153,13 +102,20 @@ class LoginScreen extends StatelessWidget {
             children: [
               const Spacer(),
               // Replace with your illustration
-              const Icon(Icons.home_repair_service,
-                  size: 150, color: AppTheme.blueAccent),
+              const Icon(
+                Icons.home_repair_service,
+                size: 150,
+                color: AppTheme.blueAccent,
+              ),
               const SizedBox(height: 20),
-              const Text('Your Home services Expert',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-              const Text('Continue with Phone Number',
-                  style: TextStyle(color: AppTheme.greyTextColor, fontSize: 16)),
+              const Text(
+                'Your Home services Expert',
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              ),
+              const Text(
+                'Continue with Phone Number',
+                style: TextStyle(color: AppTheme.greyTextColor, fontSize: 16),
+              ),
               const SizedBox(height: 30),
               TextField(
                 decoration: InputDecoration(
@@ -169,7 +125,8 @@ class LoginScreen extends StatelessWidget {
                     child: Text('🇺🇸 +1', style: TextStyle(fontSize: 16)),
                   ),
                   border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8)),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
                 ),
                 keyboardType: TextInputType.phone,
               ),
@@ -182,24 +139,31 @@ class LoginScreen extends StatelessWidget {
                     backgroundColor: AppTheme.blackColor,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                   ),
-                  child: const Text('SIGN UP',
-                      style: TextStyle(fontSize: 16, color: Colors.white)),
+                  child: const Text(
+                    'SIGN UP',
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
                 ),
               ),
               TextButton(
-                  onPressed: () => context.go('/old-login'),
-                  child: const Text('VIEW OTHER OPTION',
-                      style: TextStyle(color: AppTheme.blueAccent))),
+                onPressed: () => context.go('/old-login'),
+                child: const Text(
+                  'VIEW OTHER OPTION',
+                  style: TextStyle(color: AppTheme.blueAccent),
+                ),
+              ),
               const Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text("Already have an account?"),
                   TextButton(
-                      onPressed: () => context.go('/old-login'),
-                      child: const Text('LOG IN')),
+                    onPressed: () => context.go('/old-login'),
+                    child: const Text('LOG IN'),
+                  ),
                 ],
               ),
             ],
@@ -226,39 +190,51 @@ class OldUserLoginScreen extends StatelessWidget {
           children: [
             ElevatedButton.icon(
               icon: const Icon(Icons.facebook, color: Colors.white),
-              label: const Text('CONTINUE WITH FACEBOOK',
-                  style: TextStyle(color: Colors.white)),
+              label: const Text(
+                'CONTINUE WITH FACEBOOK',
+                style: TextStyle(color: Colors.white),
+              ),
               onPressed: () {},
               style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF3b5998),
-                  minimumSize: const Size.fromHeight(50),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8))),
+                backgroundColor: const Color(0xFF3b5998),
+                minimumSize: const Size.fromHeight(50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
             ),
             const SizedBox(height: 16),
             OutlinedButton.icon(
               // Replace with Google icon asset
               icon: const Icon(Icons.g_mobiledata, color: AppTheme.blackColor),
-              label: const Text('CONTINUE WITH GOOGLE',
-                  style: TextStyle(color: AppTheme.blackColor)),
+              label: const Text(
+                'CONTINUE WITH GOOGLE',
+                style: TextStyle(color: AppTheme.blackColor),
+              ),
               onPressed: () {},
               style: OutlinedButton.styleFrom(
-                  minimumSize: const Size.fromHeight(50),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8))),
+                minimumSize: const Size.fromHeight(50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
             ),
             const SizedBox(height: 30),
-            const Text('OR CONTINUE WITH PHONE NUMBER',
-                style: TextStyle(color: AppTheme.greyTextColor)),
+            const Text(
+              'OR CONTINUE WITH PHONE NUMBER',
+              style: TextStyle(color: AppTheme.greyTextColor),
+            ),
             const SizedBox(height: 20),
             TextField(
               decoration: InputDecoration(
                 hintText: 'Enter Mobile Number',
                 prefixIcon: const Padding(
-                    padding: EdgeInsets.all(14.0),
-                    child: Text('🇺🇸 +1', style: TextStyle(fontSize: 16))),
+                  padding: EdgeInsets.all(14.0),
+                  child: Text('🇺🇸 +1', style: TextStyle(fontSize: 16)),
+                ),
                 border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8)),
+                  borderRadius: BorderRadius.circular(8),
+                ),
               ),
               keyboardType: TextInputType.phone,
             ),
@@ -268,12 +244,16 @@ class OldUserLoginScreen extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () => context.go('/otp'),
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: AppTheme.blackColor,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8))),
-                child: const Text('LOG IN',
-                    style: TextStyle(fontSize: 16, color: Colors.white)),
+                  backgroundColor: AppTheme.blackColor,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: const Text(
+                  'LOG IN',
+                  style: TextStyle(fontSize: 16, color: Colors.white),
+                ),
               ),
             ),
             TextButton(onPressed: () {}, child: const Text('Forgot Password?')),
@@ -283,8 +263,9 @@ class OldUserLoginScreen extends StatelessWidget {
               children: [
                 const Text("Don't have an account?"),
                 TextButton(
-                    onPressed: () => context.go('/login'),
-                    child: const Text('SIGN UP')),
+                  onPressed: () => context.go('/login'),
+                  child: const Text('SIGN UP'),
+                ),
               ],
             ),
           ],
@@ -305,33 +286,43 @@ class OTPScreen extends StatelessWidget {
         padding: const EdgeInsets.all(24.0),
         child: Column(
           children: [
-            // Replace with your illustration
-            const Icon(Icons.phonelink_lock,
-                size: 120, color: AppTheme.blueAccent),
+            const Icon(
+              Icons.phonelink_lock,
+              size: 120,
+              color: AppTheme.blueAccent,
+            ),
             const SizedBox(height: 20),
-            const Text('OTP Verification',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-            Text('Enter the OTP sent to +1 8878878875',
-                style: TextStyle(color: Colors.grey.shade700)),
+            const Text(
+              'OTP Verification',
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              'Enter the OTP sent to +1 8878878875',
+              style: TextStyle(color: Colors.grey.shade700),
+            ),
             const SizedBox(height: 30),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: List.generate(
-                  4,
-                  (index) => SizedBox(
-                      width: 50,
-                      child: TextField(
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(fontSize: 20),
-                          decoration:
-                              const InputDecoration(border: UnderlineInputBorder())))),
+                4,
+                (index) => SizedBox(
+                  width: 50,
+                  child: TextField(
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 20),
+                    decoration: const InputDecoration(
+                      border: UnderlineInputBorder(),
+                    ),
+                  ),
+                ),
+              ),
             ),
             const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text("OTP not received? "),
-                TextButton(onPressed: () {}, child: const Text('RESEND OTP'))
+                TextButton(onPressed: () {}, child: const Text('RESEND OTP')),
               ],
             ),
             const SizedBox(height: 20),
@@ -340,12 +331,16 @@ class OTPScreen extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () => context.go('/home'),
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: AppTheme.blackColor,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8))),
-                child: const Text('VERIFY & PROCEED',
-                    style: TextStyle(color: Colors.white)),
+                  backgroundColor: AppTheme.blackColor,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: const Text(
+                  'VERIFY & PROCEED',
+                  style: TextStyle(color: Colors.white),
+                ),
               ),
             ),
           ],
@@ -355,7 +350,6 @@ class OTPScreen extends StatelessWidget {
   }
 }
 
-// HOME SCREEN (WITH BOTTOM NAVIGATION)
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
   @override
@@ -375,10 +369,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: _pages,
-      ),
+      body: IndexedStack(index: _selectedIndex, children: _pages),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: (index) => setState(() => _selectedIndex = index),
@@ -389,10 +380,18 @@ class _HomeScreenState extends State<HomeScreen> {
         unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.normal),
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.card_giftcard), label: 'Rewards'),
-          BottomNavigationBarItem(icon: Icon(Icons.list_alt), label: 'My Orders'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today), label: 'Bookings'),
+            icon: Icon(Icons.card_giftcard),
+            label: 'Rewards',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.list_alt),
+            label: 'My Orders',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_today),
+            label: 'Bookings',
+          ),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
       ),
@@ -400,7 +399,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-// HOME SCREEN CONTENT (THE SCROLLABLE PART)
 class HomeContent extends StatelessWidget {
   const HomeContent({Key? key}) : super(key: key);
 
@@ -415,22 +413,27 @@ class HomeContent extends StatelessWidget {
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Home',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodySmall
-                      ?.copyWith(color: AppTheme.greyTextColor)),
-              const Text('Inner Circle, Connaught Place',
-                  style: TextStyle(
-                      color: AppTheme.blackColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16)),
+              Text(
+                'Home',
+                style: Theme.of(
+                  context,
+                ).textTheme.bodySmall?.copyWith(color: AppTheme.greyTextColor),
+              ),
+              const Text(
+                'Inner Circle, Connaught Place',
+                style: TextStyle(
+                  color: AppTheme.blackColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
             ],
           ),
           actions: [
             IconButton(
-                icon: const Icon(Icons.search, color: AppTheme.blackColor),
-                onPressed: () {}),
+              icon: const Icon(Icons.search, color: AppTheme.blackColor),
+              onPressed: () {},
+            ),
           ],
         ),
         SliverToBoxAdapter(
@@ -474,7 +477,7 @@ class HomeContent extends StatelessWidget {
                   colors: [
                     Colors.black,
                     Color.fromRGBO(0, 0, 0, 0.84),
-                    Colors.transparent
+                    Colors.transparent,
                   ],
                   stops: [0.0, 0.4, 0.65],
                   begin: Alignment.centerLeft,
@@ -499,7 +502,7 @@ class HomeContent extends StatelessWidget {
                 _buildBannerService("Painting", Icons.format_paint),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
@@ -529,7 +532,7 @@ class HomeContent extends StatelessWidget {
             fontSize: 12,
             fontWeight: FontWeight.w500,
           ),
-        )
+        ),
       ],
     );
   }
@@ -545,7 +548,9 @@ class HomeContent extends StatelessWidget {
               _ServiceGridItem(icon: Icons.construction, label: "Renovation"),
               _ServiceGridItem(icon: Icons.handyman, label: "Handyman"),
               _ServiceGridItem(
-                  icon: Icons.local_shipping, label: "Home shifting"),
+                icon: Icons.local_shipping,
+                label: "Home shifting",
+              ),
             ],
           ),
           const SizedBox(height: 16),
@@ -554,7 +559,9 @@ class HomeContent extends StatelessWidget {
             children: const [
               _ServiceGridItem(icon: Icons.grass, label: "Gardening"),
               _ServiceGridItem(
-                  icon: Icons.cleaning_services, label: "Declutter"),
+                icon: Icons.cleaning_services,
+                label: "Declutter",
+              ),
               _ServiceGridItem(icon: Icons.format_paint, label: "Painting"),
             ],
           ),
@@ -571,7 +578,7 @@ class HomeContent extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Text(title, style: AppTheme.getTextTheme().headlineSmall),
+            child: Text(title, style: AppTheme.textTheme.headlineSmall),
           ),
           const SizedBox(height: 16),
           SizedBox(
@@ -581,17 +588,20 @@ class HomeContent extends StatelessWidget {
               padding: const EdgeInsets.only(left: 20),
               children: [
                 _ServiceRowItem(
-                    imagePath: 'assets/kitchen.png', // <-- ADD ASSET
-                    label: 'Kitchen Cleaning'),
+                  imagePath: 'assets/kitchen.png', // <-- ADD ASSET
+                  label: 'Kitchen Cleaning',
+                ),
                 _ServiceRowItem(
-                    imagePath: 'assets/sofa.png', // <-- ADD ASSET
-                    label: 'Sofa Cleaning'),
+                  imagePath: 'assets/sofa.png', // <-- ADD ASSET
+                  label: 'Sofa Cleaning',
+                ),
                 _ServiceRowItem(
-                    imagePath: 'assets/house.png', // <-- ADD ASSET
-                    label: 'Full House Cleaning'),
+                  imagePath: 'assets/house.png', // <-- ADD ASSET
+                  label: 'Full House Cleaning',
+                ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
@@ -603,12 +613,15 @@ class HomeContent extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: const [
+          _InfoBannerItem(icon: Icons.schedule, text: "On Demand/\nScheduled"),
           _InfoBannerItem(
-              icon: Icons.schedule, text: "On Demand/\nScheduled"),
+            icon: Icons.verified_user,
+            text: "Verified\nPartners",
+          ),
           _InfoBannerItem(
-              icon: Icons.verified_user, text: "Verified\nPartners"),
-          _InfoBannerItem(
-              icon: Icons.thumb_up, text: "Satisfaction\nGuarantee"),
+            icon: Icons.thumb_up,
+            text: "Satisfaction\nGuarantee",
+          ),
           _InfoBannerItem(icon: Icons.sell, text: "Upfront\nPricing"),
         ],
       ),
@@ -630,15 +643,19 @@ class HomeContent extends StatelessWidget {
                   color: AppTheme.blackColor,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: const Icon(Icons.security,
-                    color: AppTheme.whiteColor, size: 16),
+                child: const Icon(
+                  Icons.security,
+                  color: AppTheme.whiteColor,
+                  size: 16,
+                ),
               ),
               const SizedBox(width: 8),
-              Text("Why Choose Us",
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineSmall
-                      ?.copyWith(fontSize: 18)),
+              Text(
+                "Why Choose Us",
+                style: Theme.of(
+                  context,
+                ).textTheme.headlineSmall?.copyWith(fontSize: 18),
+              ),
             ],
           ),
           const SizedBox(height: 16),
@@ -669,14 +686,9 @@ class HomeContent extends StatelessWidget {
   }
 
   Widget _buildSectionDivider() {
-    return Container(
-      height: 12,
-      color: AppTheme.lightGreyBg,
-    );
+    return Container(height: 12, color: AppTheme.lightGreyBg);
   }
 }
-
-// --- WIDGETS FOR HOME SCREEN ---
 
 class _ServiceGridItem extends StatelessWidget {
   final IconData icon;
@@ -697,9 +709,11 @@ class _ServiceGridItem extends StatelessWidget {
         children: [
           Icon(icon, size: 40, color: AppTheme.blueAccent),
           const SizedBox(height: 8),
-          Text(label,
-              textAlign: TextAlign.center,
-              style: AppTheme.getTextTheme().labelMedium),
+          Text(
+            label,
+            textAlign: TextAlign.center,
+            style: AppTheme.textTheme.labelMedium,
+          ),
         ],
       ),
     );
@@ -728,17 +742,20 @@ class _ServiceRowItem extends StatelessWidget {
               width: 134,
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) => Container(
-                  height: 84,
-                  width: 134,
-                  color: AppTheme.lightGreyBg,
-                  child: const Icon(Icons.image_not_supported)),
+                height: 84,
+                width: 134,
+                color: AppTheme.lightGreyBg,
+                child: const Icon(Icons.image_not_supported),
+              ),
             ),
           ),
           const SizedBox(height: 8),
-          Text(label,
-              style: AppTheme.getTextTheme()
-                  .labelMedium
-                  ?.copyWith(color: AppTheme.tertiaryTextColor)),
+          Text(
+            label,
+            style: AppTheme.textTheme.labelMedium?.copyWith(
+              color: AppTheme.tertiaryTextColor,
+            ),
+          ),
         ],
       ),
     );
@@ -764,9 +781,11 @@ class _InfoBannerItem extends StatelessWidget {
           child: Icon(icon, color: AppTheme.blueAccent, size: 24),
         ),
         const SizedBox(height: 8),
-        Text(text,
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w300)),
+        Text(
+          text,
+          textAlign: TextAlign.center,
+          style: const TextStyle(fontSize: 10, fontWeight: FontWeight.w300),
+        ),
       ],
     );
   }
@@ -778,11 +797,12 @@ class _FeatureCard extends StatelessWidget {
   final String subtitle;
   final Color iconBgColor;
 
-  const _FeatureCard(
-      {required this.icon,
-      required this.title,
-      required this.subtitle,
-      required this.iconBgColor});
+  const _FeatureCard({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    required this.iconBgColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -800,8 +820,8 @@ class _FeatureCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: AppTheme.getTextTheme().titleLarge),
-                Text(subtitle, style: AppTheme.getTextTheme().bodySmall),
+                Text(title, style: AppTheme.textTheme.titleLarge),
+                Text(subtitle, style: AppTheme.textTheme.bodySmall),
               ],
             ),
           ),
@@ -824,23 +844,31 @@ class SafetyMeasures extends StatelessWidget {
             color: Colors.black87,
             padding: const EdgeInsets.symmetric(vertical: 12),
             child: const Center(
-                child: Text('Best-in Class Safety Measures',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16))),
+              child: Text(
+                'Best-in Class Safety Measures',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
-                _buildSafetyItem(Icons.masks,
-                    'Usage of masks, gloves & Sanitisers',
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'),
+                _buildSafetyItem(
+                  Icons.masks,
+                  'Usage of masks, gloves & Sanitisers',
+                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+                ),
                 const SizedBox(height: 16),
-                _buildSafetyItem(Icons.social_distance,
-                    'Low-contact Service Experience',
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'),
+                _buildSafetyItem(
+                  Icons.social_distance,
+                  'Low-contact Service Experience',
+                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+                ),
               ],
             ),
           ),
@@ -858,9 +886,13 @@ class SafetyMeasures extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(title,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 16)),
+              Text(
+                title,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
               Text(subtitle, style: const TextStyle(color: Colors.black54)),
             ],
           ),
